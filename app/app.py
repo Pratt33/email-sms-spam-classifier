@@ -280,9 +280,11 @@ email-sms-spam-classifier/
                 use_container_width=True
             )
         with col_button3:
-            if st.button("📋 Copy Result", use_container_width=True, help="Copy the last prediction result"):
+            if st.button("📋 Copy Result", use_container_width=True, help="Copy last prediction result"):
                 if 'last_prediction' in st.session_state:
-                    st.info("Result copied to clipboard!")
+                    st.text_area("Copy this result:", value=st.session_state.last_prediction, height=100, help="Select and copy this text")
+                else:
+                    st.info("No prediction result available yet. Analyze a message first!")
         
         # Handle clear button
         if clear_button:
