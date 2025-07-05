@@ -172,47 +172,23 @@ def main():
     # Download NLTK data
     download_nltk_data()
     
-    # Check if we're running from the correct directory
-    current_dir = Path.cwd()
-    expected_models_dir = current_dir.parent / "models"
-    
-    if not expected_models_dir.exists():
-        st.error("❌ Models directory not found!")
-        st.error(f"Expected: {expected_models_dir}")
-        st.error(f"Current directory: {current_dir}")
-        
-        st.markdown("### 🚀 How to Run the App")
-        st.markdown("""
-        **Option 1: Run from project root directory**
-        ```bash
-        cd email-sms-spam-classifier
-        streamlit run app/app.py
-        ```
-        
-        **Option 2: Run from app directory (current)**
-        ```bash
-        cd app
-        streamlit run app.py
-        ```
-        """)
-        
-        st.stop()
+    # Header
+    st.markdown('<h1 class="main-header">🛡️ Email/SMS Spam Classifier</h1>', unsafe_allow_html=True)
     
     # Header
     st.markdown('<h1 class="main-header">🛡️ Email/SMS Spam Classifier</h1>', unsafe_allow_html=True)
     
-    # Initialize classifier with multiple path options
-    # Since we're running from the app directory, we need to go up one level to find models
+    # Initialize classifier with multiple path options for different environments
     possible_paths = [
-        # Option 1: Go up one directory from current working directory (app folder)
-        Path.cwd().parent / "models" / "model.pkl",
-        Path.cwd().parent / "models" / "vectorizer.pkl",
-        # Option 2: Relative to app directory, going up one level
-        Path(__file__).parent.parent / "models" / "model.pkl",
-        Path(__file__).parent.parent / "models" / "vectorizer.pkl",
-        # Option 3: Try current directory (in case models are copied here)
+        # Option 1: Streamlit Cloud environment (current directory is project root)
         Path.cwd() / "models" / "model.pkl",
         Path.cwd() / "models" / "vectorizer.pkl",
+        # Option 2: Local development (app directory)
+        Path.cwd().parent / "models" / "model.pkl",
+        Path.cwd().parent / "models" / "vectorizer.pkl",
+        # Option 3: Relative to app directory, going up one level
+        Path(__file__).parent.parent / "models" / "model.pkl",
+        Path(__file__).parent.parent / "models" / "vectorizer.pkl",
         # Option 4: Try relative to current working directory
         Path("models/model.pkl"),
         Path("models/vectorizer.pkl"),
@@ -230,8 +206,8 @@ def main():
     
     # If still not found, use the most likely path and let the error handler deal with it
     if model_path is None or vectorizer_path is None:
-        model_path = Path.cwd().parent / "models" / "model.pkl"
-        vectorizer_path = Path.cwd().parent / "models" / "vectorizer.pkl"
+        model_path = Path.cwd() / "models" / "model.pkl"
+        vectorizer_path = Path.cwd() / "models" / "vectorizer.pkl"
     
     classifier = SpamClassifier(str(model_path), str(vectorizer_path))
     
