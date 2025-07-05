@@ -156,15 +156,16 @@ class SpamClassifier:
 
 def download_nltk_data():
     """Download required NLTK data"""
+    import os
     
-    # directory for NLTK data in the current working directory
+    # Create a directory for NLTK data in the current working directory
     nltk_data_dir = os.path.join(os.getcwd(), 'nltk_data')
     os.makedirs(nltk_data_dir, exist_ok=True)
     
     # Add the directory to NLTK's data path
     nltk.data.path.append(nltk_data_dir)
     
-    # Download required NLTK data to the custom directory
+    # Download all required NLTK data to the custom directory
     nltk.download('punkt', download_dir=nltk_data_dir, quiet=True)
     nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
 
