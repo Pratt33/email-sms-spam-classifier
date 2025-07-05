@@ -10,7 +10,7 @@ A machine learning-powered web application that accurately classifies emails and
 - [Solution](#solution)
 - [Visualizations](#visualizations)
 - [Results](#results)
-- [Future Enhancements](#Future-Enhancements)
+- [Future Enhancements](#future-enhancements)
 - [Installation](#installation)
 - [Deployment](#deployment)
 
