@@ -156,24 +156,23 @@ class SpamClassifier:
 
 def download_nltk_data():
     """Download required NLTK data"""
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except LookupError:
-        nltk.download('punkt')
     
-    try:
-        nltk.data.find('corpora/stopwords')
-    except LookupError:
-        nltk.download('stopwords')
+    # directory for NLTK data in the current working directory
+    nltk_data_dir = os.path.join(os.getcwd(), 'nltk_data')
+    os.makedirs(nltk_data_dir, exist_ok=True)
+    
+    # Add the directory to NLTK's data path
+    nltk.data.path.append(nltk_data_dir)
+    
+    # Download required NLTK data to the custom directory
+    nltk.download('punkt', download_dir=nltk_data_dir, quiet=True)
+    nltk.download('stopwords', download_dir=nltk_data_dir, quiet=True)
 
 def main():
     """Main application function"""
     
     # Download NLTK data
     download_nltk_data()
-    
-    # Header
-    st.markdown('<h1 class="main-header">🛡️ Email/SMS Spam Classifier</h1>', unsafe_allow_html=True)
     
     # Header
     st.markdown('<h1 class="main-header">🛡️ Email/SMS Spam Classifier</h1>', unsafe_allow_html=True)
